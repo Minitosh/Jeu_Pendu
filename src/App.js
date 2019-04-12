@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  state = {
+    randomWords: this.generateWords(),
+    currentLetters: [],
+    guesses: 0,
+    matchedCardIndices: [],
+
+  }
+
+  // Produit une représentation textuelle de l’état de la partie,
+  // chaque lettre non découverte étant représentée par un _underscore_.
+  // (CSS assurera de l’espacement entre les lettres pour mieux
+  // visualiser le tout).
+  computeDisplay(phrase, usedLetters) {
+    console.log(phrase, usedLetters)
+    return phrase.replace(/\w/g,
+      (letter) => (usedLetters.includes(letter) ? letter : '_')
+    )
+  }
+
+  generateWords() {
+
+    const randomWord = require('random-words')
+    return randomWord()
+
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.computeDisplay(this.state.randomWords,"l")}
+        <br></br>
+        <br></br>
+        <textarea rows={1} cols={1}/>
       </div>
     );
   }
